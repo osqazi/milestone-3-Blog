@@ -1,4 +1,5 @@
 import { Bebas_Neue } from "next/font/google";
+import Link from "next/link";
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"], // Add subsets if necessary
@@ -12,30 +13,45 @@ export default function Navbar() {
       <header className="text-blue-600 p-4 ">
         <nav className="container mx-auto flex justify-between">
           <div className="flex space-x-2">
-            <div className={`text-5xl font-bold ${bebasNeue.className}`}>
+            <div className={`text-6xl font-bold ${bebasNeue.className}`}>
               META
             </div>
             <div
-              className={`text-5xl font-bold text-white lowercase border-white ${bebasNeue.className}`}
+              className={`text-6xl font-bold text-white lowercase border-white ${bebasNeue.className}`}
               style={{
-                WebkitTextStroke: "1px black",
+                WebkitTextStroke: "1px blue",
               }}
             >
               Log
             </div>
-            <div className="flex items-end font-bold text-cyan-500 text-xl">
+            <div className="flex font-bold text-cyan-500 text-xl mt-6">
                 . . . Kuch Naya
             </div>
           </div>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-8 font-bold">
             <li>
-              <a href="/">Home</a>
+            <Link href="/">
+              <div className="flex gap-1 text-end">
+              <i className="fa-solid fa-house"></i>
+              <p>Home</p>
+              </div>
+              </Link>
             </li>
             <li>
-              <a href="/about">About</a>
+            <Link href="/about">
+              <div className="flex gap-1 text-end">
+              <i className="fa-solid fa-person-chalkboard"></i>
+              <p>About</p>
+              </div>
+              </Link>
             </li>
             <li>
-              <a href="/contact">Contact</a>
+            <Link href="/contact">
+              <div className="flex gap-1 text-end">
+              <i className="fa-solid fa-address-book"></i>
+              <p>Contact</p>
+              </div>
+              </Link>
             </li>
           </ul>
         </nav>
