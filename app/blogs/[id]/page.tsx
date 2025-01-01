@@ -1,8 +1,10 @@
+"use client"
 import { notFound } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
 import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 
+// Define the types for the blog data
 interface Comment {
   name: string;
   date: string;
@@ -23,8 +25,11 @@ interface Blog {
   content: BlogContent;
 }
 
-// Next.js expects a PageProps type with params being part of the Page context.
-export default function Blog({ params }: { params: { id: string } }) {
+interface BlogProps {
+  params: { id: string };
+}
+
+export default function Blog({ params }: BlogProps) {
   // Extract the id from params correctly
   const blogId = parseInt(params.id); // params is an object containing the id
 
