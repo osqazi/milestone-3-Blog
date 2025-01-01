@@ -4,11 +4,35 @@ import Sidebar from "@/app/components/Sidebar";
 import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 
-export default async function Blog({ params }) {
+interface BlogParams {
+  id: string;  // The ID is expected to be a string in the params
+}
+
+interface Comment {
+  name: string;
+  date: string;
+  content: string;
+}
+
+interface BlogContent {
+  [key: string]: string | string[]; // Handles content that can be either a string or an array of strings
+}
+
+interface Blog {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  pic: string;
+  comments: Comment[];
+  content: BlogContent;
+}
+
+export default async function Blog({ params }: { params: BlogParams }) {
   // Extract the id from params correctly
   const blogId = parseInt(params.id); // params is an object containing the id
 
-  const blog = BlogData.find((blogg) => blogg.id === blogId);
+  const blog = BlogData.find((blogg: Blog) => blogg.id === blogId);
 
   if (!blog) {
     notFound(); // If no blog is found, show a "not found" page
