@@ -10,7 +10,8 @@ interface Params {
 }
 
 export default async function Blog({ params }: { params: Params }) {
-  const blogId = parseInt(params.id, 10); // Ensure the ID is parsed as an integer.
+  const blogId = parseInt(params.id, 10)
+  
 
   const blog = BlogData.find((blogg) => blogg.id === blogId);
 
