@@ -5,13 +5,13 @@ import Sidebar from "@/app/components/Sidebar";
 import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 
-type Props = {
+type PageProps = {
   params: {
     id: string;
-  }
-}
+  };
+};
 
-export default function Blog({ params }: Props) {
+const Blog = async ({ params }: PageProps) => {
   const blogId = parseInt(params.id, 10);
 
   const blog = BlogData.find((blogg) => blogg.id === blogId);
@@ -30,7 +30,7 @@ export default function Blog({ params }: Props) {
     const url = typeof window !== 'undefined' ? window.location.href : '';
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`, '_blank');
   };
-  
+
   return (
     <main className="container mx-auto p-4">
       <div className="flex space-x-3">
@@ -115,3 +115,5 @@ export default function Blog({ params }: Props) {
     </main>
   );
 }
+
+export default Blog;
