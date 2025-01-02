@@ -18,7 +18,7 @@ export async function generateMetadata(
   }
 }
 
-async function Blog({ params }: Props) {
+async function Blog({ params }: any) {
   const blogId = parseInt(params.id, 10);
   const blog = BlogData.find((blogg) => blogg.id === blogId);
 
