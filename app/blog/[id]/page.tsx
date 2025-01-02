@@ -8,7 +8,7 @@ import ShareButtons from '@/app/components/ShareButtons';
 export default function Blog({ params }) {
   
   const blogId = parseInt(params.id, 10);
-  const blog = (BlogData[blogId - 1])
+  const blog = BlogData.find((blogg)=> blogg.id === blogId )
 
   if (!blog) {
     notFound();
