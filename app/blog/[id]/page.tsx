@@ -1,23 +1,26 @@
 "use client"
+
 import { notFound } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
 import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 
-
-interface Params {
-  id: string;
+// Define the params interface
+interface BlogParams {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function Blog({ params }: { params: Params }) {
-  const blogId = parseInt(params.id, 10)
-  
+export default function Blog({ params, searchParams }: BlogParams) {
+  const blogId = parseInt(params.id, 10);
 
   const blog = BlogData.find((blogg) => blogg.id === blogId);
 
   if (!blog) {
-    notFound(); // Handle the case where no blog is found.
-    return null; // Safeguard return for TypeScript.
+    notFound();
+    return null;
   }
 
   const shareToFacebook = () => {
@@ -29,7 +32,7 @@ export default async function Blog({ params }: { params: Params }) {
     const url = typeof window !== 'undefined' ? window.location.href : '';
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`, '_blank');
   };
-
+  
   return (
     <main className="container mx-auto p-4">
       <div className="flex space-x-3">
