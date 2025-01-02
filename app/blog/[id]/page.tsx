@@ -1,26 +1,14 @@
-import { Metadata } from 'next';
 import { notFound } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
 import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 import ShareButtons from '@/app/components/ShareButtons';
 
-interface Props {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
 
-export async function generateMetadata(
-  { params }: Props
-): Promise<Metadata> {
-  return {
-    title: `Blog ${params.id}`,
-  }
-}
-
-async function Blog({ params }: any) {
+export default function Blog({ params }) {
+  
   const blogId = parseInt(params.id, 10);
-  const blog = BlogData.find((blogg) => blogg.id === blogId);
+  const blog = (BlogData[blogId - 1])
 
   if (!blog) {
     notFound();
@@ -95,4 +83,3 @@ async function Blog({ params }: any) {
     </main>
   );
 }
-export default Blog;
