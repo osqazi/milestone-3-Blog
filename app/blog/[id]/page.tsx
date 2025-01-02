@@ -5,19 +5,14 @@ import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 
 
-interface Params {
-  id: string;
-}
-
-export default async function Blog({ params }: { params: Params }) {
-  
-  // Extract the id from params correctly
-  const blogId = parseInt(params.id); // params is an object containing the id
+export default async function Blog({ params }: { params: { id: string } }) {
+  const blogId = parseInt(params.id, 10); // Parse the ID as a number
 
   const blog = BlogData.find((blogg) => blogg.id === blogId);
 
   if (!blog) {
     notFound(); // If no blog is found, show a "not found" page
+    return null;
   }
 
   const shareToFacebook = () => {
@@ -29,6 +24,7 @@ export default async function Blog({ params }: { params: Params }) {
     const url = window.location.href;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`, '_blank');
   };
+
 
   return (
     <main className="container mx-auto p-4">
