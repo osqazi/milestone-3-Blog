@@ -1,54 +1,23 @@
-import { GetServerSideProps } from 'next';
-import { notFound } from 'next/navigation';
-import Sidebar from '@/app/components/Sidebar';
-import BlogData from '@/app/components/data/Blogdata';
-import Image from 'next/image';
+"use client"
+import { notFound } from "next/navigation";
+import Sidebar from "@/app/components/Sidebar";
+import BlogData from "@/app/components/data/Blogdata";
+import Image from "next/image";
 
-// Define the types for the blog data
-interface Comment {
-  name: string;
-  date: string;
-  content: string;
+
+interface Params {
+  id: string;
 }
 
-interface BlogContent {
-  [key: string]: string | string[]; // Handles content that can be either a string or an array of strings
-}
+export default async function Blog({ params }: { params: Params }) {
+  
+  // Extract the id from params correctly
+  const blogId = parseInt(params.id); // params is an object containing the id
 
-interface Blog {
-  id: number;
-  title: string;
-  author: string;
-  date: string;
-  pic: string;
-  comments: Comment[];
-  content: BlogContent;
-}
-
-interface BlogProps {
-  blog: Blog | null;
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params as { id: string };
-  const blogId = parseInt(id);
-
-  const blog = BlogData.find((blog) => blog.id === blogId) || null;
+  const blog = BlogData.find((blogg) => blogg.id === blogId);
 
   if (!blog) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { blog },
-  };
-};
-
-const Blog = ({ blog }: BlogProps) => {
-  if (!blog) {
-    return <p>Blog not found</p>;
+    notFound(); // If no blog is found, show a "not found" page
   }
 
   const shareToFacebook = () => {
@@ -134,6 +103,4 @@ const Blog = ({ blog }: BlogProps) => {
       </section>
     </main>
   );
-};
-
-export default Blog;
+}

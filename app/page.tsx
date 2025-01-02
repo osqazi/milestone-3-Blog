@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import Sidebar from "./components/Sidebar";
 import blogdata from '@/app/components/data/Blogdata'
@@ -37,7 +38,7 @@ export default async function Home() {
             </div>
             
             <p className="mt-2 text-justify mb-2">{blog.content.introduction}</p>
-            <Link href={`/blogs/${blog.id}`} className="text-purple-400 font-bold">Read more...</Link>
+            <Link href={`/blog/${blog.id}`} className="text-purple-400 font-bold">Read more...</Link>
           </div>
         ))}
       </section>
