@@ -5,7 +5,9 @@ import Image from "next/image";
 import ShareButtons from '@/app/components/ShareButtons';
 
 
+/* eslint-disable no-console */
 export default function Blog({params}: any | string ) {
+  console.log(params)
   
   const blogId = parseInt(params.id, 10);
   const blog = BlogData.find((blogg)=> blogg.id === blogId )
@@ -83,3 +85,4 @@ export default function Blog({params}: any | string ) {
     </main>
   );
 }
+/* eslint-enable no-console */
