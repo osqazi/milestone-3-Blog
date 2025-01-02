@@ -5,26 +5,29 @@ import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
 
 
-export default async function Blog({ params }: { params: { id: string } }) {
-  const blogId = parseInt(params.id, 10); // Parse the ID as a number
+interface Params {
+  id: string;
+}
+
+export default async function Blog({ params }: { params: Params }) {
+  const blogId = parseInt(params.id, 10); // Ensure the ID is parsed as an integer.
 
   const blog = BlogData.find((blogg) => blogg.id === blogId);
 
   if (!blog) {
-    notFound(); // If no blog is found, show a "not found" page
-    return null;
+    notFound(); // Handle the case where no blog is found.
+    return null; // Safeguard return for TypeScript.
   }
 
   const shareToFacebook = () => {
-    const url = window.location.href;
+    const url = typeof window !== 'undefined' ? window.location.href : '';
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
   };
 
   const shareToWhatsApp = () => {
-    const url = window.location.href;
+    const url = typeof window !== 'undefined' ? window.location.href : '';
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`, '_blank');
   };
-
 
   return (
     <main className="container mx-auto p-4">
@@ -44,7 +47,7 @@ export default async function Blog({ params }: { params: { id: string } }) {
           </div>
           <Image src={blog.pic} alt={blog.title} width={1000} height={100} />
 
-          {/* Dynamically Render Content Sections */}
+          {/* Render content sections */}
           {Object.entries(blog.content).map(([key, value]) => (
             <div key={key} className="mt-4">
               <p className="font-bold text-xl capitalize">{key.replace(/_/g, ' ')}</p>
@@ -64,14 +67,14 @@ export default async function Blog({ params }: { params: { id: string } }) {
 
           <div className="mt-4 flex space-x-4">
             <button className="bg-blue-500 text-white px-4 py-2 rounded">Like</button>
-            <button 
-              className="bg-gray-300 text-black px-4 py-2 rounded" 
+            <button
+              className="bg-gray-300 text-black px-4 py-2 rounded"
               onClick={shareToFacebook}
             >
               Share to Facebook
             </button>
-            <button 
-              className="bg-green-500 text-white px-4 py-2 rounded" 
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded"
               onClick={shareToWhatsApp}
             >
               Share to WhatsApp
@@ -83,9 +86,19 @@ export default async function Blog({ params }: { params: { id: string } }) {
       <section className="mt-8">
         <h2 className="text-2xl font-bold mb-4">Comments</h2>
         <form className="mb-6">
-          <input type="text" placeholder="Enter Your Name" className="py-2 mb-2 border px-6 w-full" />
-          <textarea placeholder="Write your comment..." className="w-full p-4 border rounded mb-4" rows={4}></textarea>
-          <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded">Submit</button>
+          <input
+            type="text"
+            placeholder="Enter Your Name"
+            className="py-2 mb-2 border px-6 w-full"
+          />
+          <textarea
+            placeholder="Write your comment..."
+            className="w-full p-4 border rounded mb-4"
+            rows={4}
+          ></textarea>
+          <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded">
+            Submit
+          </button>
         </form>
         <ul className="space-y-4">
           {blog.comments.map((comment, index) => (
