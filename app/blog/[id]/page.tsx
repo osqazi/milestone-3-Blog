@@ -1,17 +1,24 @@
-// Remove "use client" since this will be a server component
+import { Metadata } from 'next';
 import { notFound } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
 import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
-import ShareButtons from "@/app/components/ShareButtons";
+import ShareButtons from '@/app/components/ShareButtons';
 
-interface PageProps {
-  params: {
-    id: string;
+interface Props {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+  { params }: Props
+): Promise<Metadata> {
+  return {
+    title: `Blog ${params.id}`,
   }
 }
 
-export default async function Blog({ params }: PageProps) {
+async function Blog({ params }: Props) {
   const blogId = parseInt(params.id, 10);
   const blog = BlogData.find((blogg) => blogg.id === blogId);
 
@@ -19,6 +26,7 @@ export default async function Blog({ params }: PageProps) {
     notFound();
     return null;
   }
+
 
   return (
     <main className="container mx-auto p-4">
@@ -87,3 +95,4 @@ export default async function Blog({ params }: PageProps) {
     </main>
   );
 }
+export default Blog;
