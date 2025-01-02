@@ -5,7 +5,7 @@ import Image from "next/image";
 import ShareButtons from '@/app/components/ShareButtons';
 
 
-export default function Blog({ params }) {
+export default function Blog({params}: any | string ) {
   
   const blogId = parseInt(params.id, 10);
   const blog = BlogData.find((blogg)=> blogg.id === blogId )
