@@ -13,7 +13,7 @@ interface BlogParams {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default function Blog({ params, searchParams }: BlogParams) {
+export default function Blog({ params }: BlogParams) {
   const blogId = parseInt(params.id, 10);
 
   const blog = BlogData.find((blogg) => blogg.id === blogId);
@@ -32,7 +32,7 @@ export default function Blog({ params, searchParams }: BlogParams) {
     const url = typeof window !== 'undefined' ? window.location.href : '';
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`, '_blank');
   };
-  
+
   return (
     <main className="container mx-auto p-4">
       <div className="flex space-x-3">
