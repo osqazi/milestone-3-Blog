@@ -10,7 +10,7 @@ import { Bebas_Neue } from "next/font/google";
 
 const builder = imageUrlBuilder(client);
 
-export function urlFor(source: any) {
+function urlFor(source: any) {
   return builder.image(source);
 }
 
