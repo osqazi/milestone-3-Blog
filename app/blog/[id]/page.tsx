@@ -1,29 +1,52 @@
+// Blog Page Component (Server Side)
 import { notFound } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
-import BlogData from "@/app/components/data/Blogdata";
 import Image from "next/image";
-import ShareButtons from '@/app/components/ShareButtons';
+import ShareButtons from "@/app/components/ShareButtons";
+import { client } from "@/sanity/lib/client";
+import imageUrlBuilder from "@sanity/image-url";
+import CommentForm from "@/app/components/CommentForm";
+import { Bebas_Neue } from "next/font/google";
+
+const builder = imageUrlBuilder(client);
+
+export function urlFor(source: any) {
+  return builder.image(source);
+}
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"], // Add subsets if necessary
+  weight: "400", // Adjust weight if needed
+  variable: "--font-bebas-neue", // Optional: define a CSS variable for the font
+});
 
 
-/* eslint-disable no-console */
-export default function Blog({params}: any | string ) {
-  console.log(params)
-  
-  const blogId = parseInt(params.id, 10);
-  const blog = BlogData.find((blogg)=> blogg.id === blogId )
+async function getBlogData(id: string) {
+  const data = await client.fetch(`*[_type == "blog" && _id == $id][0]`, {
+    id,
+  });
+  return data;
+}
+
+export default async function Blog({ params }: any) {
+  const { id } = params;
+  const blog = await getBlogData(id);
 
   if (!blog) {
     notFound();
     return null;
   }
 
-
   return (
     <main className="container mx-auto p-4">
-      <div className="flex space-x-3">
+      <div className="grid grid-cols-1 lg:grid-cols-[22%_78%] md:grid-cols-[22%_78% gap-4">
+      
+      <div className="col-span-1 order-2 lg:order-1 md:order-1">
         <Sidebar />
-        <div className="bg-white p-6 rounded shadow w-3/4">
-          <h2 className="text-xl font-bold mb-4">{blog.title}</h2>
+        </div>
+        <div className="col-span-1 order-1 lg:order-2 md:order-2 text-justify">
+        <div className="bg-white p-6 rounded shadow">
+          <h2 className={`text-4xl font-bold my-4 ${bebasNeue.className}`}>{blog.title}</h2>
           <div className="flex gap-6">
             <div className="flex gap-2">
               <i className="fa-solid fa-pen-nib text-blue-500 text-xl"></i>
@@ -34,55 +57,100 @@ export default function Blog({params}: any | string ) {
               <p className="text-gray-600 font-bold">on {blog.date}</p>
             </div>
           </div>
-          <Image src={blog.pic} alt={blog.title} width={1000} height={100} />
+          <Image
+            src={urlFor(blog.pic).url() || "/fallback-image.jpg"}
+            alt={blog.title}
+            width={1000}
+            height={100}
+          />
 
-          {Object.entries(blog.content).map(([key, value]) => (
-            <div key={key} className="mt-4">
-              <p className="font-bold text-xl capitalize">{key.replace(/_/g, ' ')}</p>
-              {Array.isArray(value) ? (
-                <ul className="list-disc ml-6 mt-2">
-                  {value.map((item, index) => (
-                    <li key={index} className="mt-1">{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-2">{value}</p>
-              )}
+          {/* Render the content in the correct order */}
+          {blog.content.introduction && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">Introduction</p>
+              <p>{blog.content.introduction}</p>
             </div>
-          ))}
+          )}
+
+          {blog.content.what_it_is && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">What it is</p>
+              <p>{blog.content.what_it_is}</p>
+            </div>
+          )}
+
+          {blog.content.core_features && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">Core Features</p>
+              <ul className="list-disc ml-6 mt-2">
+                {blog.content.core_features.map((item: string, index: number) => (
+                  <li key={index} className="mt-1">{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {blog.content.benefits && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">Benefits</p>
+              <ul className="list-disc ml-6 mt-2">
+                {blog.content.benefits.map((item: string, index: number) => (
+                  <li key={index} className="mt-1">{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {blog.content.use_cases && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">Use Cases</p>
+              <ul className="list-disc ml-6 mt-2">
+                {blog.content.use_cases.map((item: string, index: number) => (
+                  <li key={index} className="mt-1">{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {blog.content.getting_started && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">Getting Started</p>
+              <p>{blog.content.getting_started}</p>
+            </div>
+          )}
+
+          {blog.content.conclusion && (
+            <div className="mt-4">
+              <p className="font-bold text-xl">Conclusion</p>
+              <p>{blog.content.conclusion}</p>
+            </div>
+          )}
 
           <ShareButtons />
 
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">Comments</h2>
-            <form className="mb-6">
-              <input
-                type="text"
-                placeholder="Enter Your Name"
-                className="py-2 mb-2 border px-6 w-full"
-              />
-              <textarea
-                placeholder="Write your comment..."
-                className="w-full p-4 border rounded mb-4"
-                rows={4}
-              ></textarea>
-              <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded">
-                Submit
-              </button>
-            </form>
+            <CommentForm blogId={id} />
             <ul className="space-y-4">
-              {blog.comments.map((comment, index) => (
-                <li key={index} className="bg-gray-100 p-4 rounded">
-                  <p className="text-gray-800 font-bold">{comment.name}</p>
-                  <p className="text-gray-600 text-sm">{comment.date}</p>
-                  <p className="mt-2">{comment.content}</p>
-                </li>
-              ))}
+              {blog.comments &&
+              Array.isArray(blog.comments) &&
+              blog.comments.length > 0 ? (
+                blog.comments.map((comment: any, index: any) => (
+                  <li key={index} className="bg-gray-100 p-4 rounded">
+                    <p className="text-gray-800 font-bold">{comment.name}</p>
+                    <p className="text-gray-600 text-sm">{comment.date}</p>
+                    <p className="mt-2">{comment.content}</p>
+                  </li>
+                ))
+              ) : (
+                <p>No comments available.</p>
+              )}
             </ul>
           </section>
         </div>
+        </div>
+      
       </div>
     </main>
   );
 }
-/* eslint-enable no-console */

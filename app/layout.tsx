@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="bg-gray-100 min-h-screen">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></link>
         <Navbar />
-        <div className="pt-14">
+        <div className="pt-32">
         {children}
         <Footer/>
         </div>

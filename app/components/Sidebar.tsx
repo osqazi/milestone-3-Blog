@@ -5,7 +5,7 @@ import Image from "next/image";
 export default async function Sidebar(){
     const blogs = await BlogData;
     return(
-        <aside className="w-1/4 bg-white p-4 rounded shadow">
+        <aside className="bg-white p-4 rounded shadow">
         <h2 className="font-bold mb-4 text-center text-2xl">Popular Blogs</h2>
         <ul>
           {blogs.map((blog) => (
