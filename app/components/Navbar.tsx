@@ -2,6 +2,8 @@
 import { Bebas_Neue } from "next/font/google";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
+import logo from '@/public/logo.ico'
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"], // Add subsets if necessary
@@ -17,27 +19,35 @@ export default function Navbar() {
       <header className="text-blue-600 p-1">
         <nav className="container mx-auto flex justify-between items-center">
           <div className="flex space-x-2">
-            <div className={`text-6xl font-bold ${bebasNeue.className}`}>
+            <div>
+              <Image src={logo} alt="logo.png" height={80} width={80}/>
+            </div>
+            <div className="lg:flex md:flex">
+            <div className="flex space-x-2">
+            <div className={`text-6xl lg:text-6xl md:text-6xl font-bold ${bebasNeue.className}`}>
               META
             </div>
             <div
-              className={`text-6xl font-bold text-white lowercase border-white ${bebasNeue.className}`}
+              className={`text-6xl lg:text-6xl md:text-6xl font-bold text-white lowercase border-white ${bebasNeue.className}`}
               style={{
                 WebkitTextStroke: "1px blue",
               }}
             >
               Log
             </div>
-            <div className=" font-bold text-cyan-500 text-xl mt-6">
-              . . . Kuch Naya
             </div>
+            <div className=" font-bold text-cyan-500 text-xl lg:mt-6 md:mt-6">
+              ... Kuch Naya
+            </div>
+            </div>
+            
           </div>
           {/* Hamburger menu button */}
           <button
             className="block md:hidden text-blue-600"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <i className={`fa-solid ${menuOpen ? "fa-times" : "fa-bars"} text-2xl`}></i>
+            <i className={`fa-solid ${menuOpen ? "fa-times" : "fa-bars"} text-4xl`}></i>
           </button>
           {/* Links for larger screens */}
           <ul
