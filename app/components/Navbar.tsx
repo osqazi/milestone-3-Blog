@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <div className="fixed w-screen z-50 bg-gray-100">
-      <header className="text-blue-600 p-4">
+      <header className="text-blue-600 p-1">
         <nav className="container mx-auto flex justify-between items-center">
           <div className="flex space-x-2">
             <div className={`text-6xl font-bold ${bebasNeue.className}`}>
@@ -103,8 +103,10 @@ export default function Navbar() {
           </ul>
         </div>
       </header>
-      <div className="text-center font-bold italic lg:text-2xl md:text-xl text-lg bg-gray-500 text-white py-1 rounded-full">
-         - - - Sirf Kam ki information. No Bakwas - - -
+      <div className="text-center font-bold italic lg:text-2xl md:text-xl text-lg bg-gray-200 text-white py-1" style={{
+                WebkitTextStroke: "1px black",
+              }}>
+         - - - Sirf Kam ki Knowledge. No Bakwaas - - -
       </div>
     </div>
   );
