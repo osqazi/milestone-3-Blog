@@ -77,7 +77,7 @@ export default function Navbar() {
         >
           <ul className="space-y-4 font-bold">
             <li>
-              <Link href="/">
+              <Link href="/" onClick={()=>setMenuOpen(false)}>
                 <div className="flex gap-1 text-end">
                   <i className="fa-solid fa-house"></i>
                   <p>Home</p>
@@ -85,7 +85,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="/about">
+              <Link href="/about" onClick={()=>setMenuOpen(false)}>
                 <div className="flex gap-1 text-end">
                   <i className="fa-solid fa-person-chalkboard"></i>
                   <p>About</p>
@@ -93,7 +93,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="/contact">
+              <Link href="/contact" onClick={()=>setMenuOpen(false)}>
                 <div className="flex gap-1 text-end">
                   <i className="fa-solid fa-address-book"></i>
                   <p>Contact</p>

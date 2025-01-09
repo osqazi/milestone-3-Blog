@@ -28,7 +28,7 @@ export default async function Home() {
   const blogs= await getData();
 
   return (
-    <main className="container mx-auto p-4 flex">
+    <main className="container mx-auto p-0 flex">
       <div className="grid grid-cols-1 lg:grid-cols-[22%_78%] md:grid-cols-[22%_78%]">
         <div className="col-span-1 order-2 lg:order-1 md:order-1">
       <Sidebar/>
