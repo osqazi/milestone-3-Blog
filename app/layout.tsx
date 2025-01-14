@@ -23,14 +23,6 @@ export const metadata: Metadata = {
       "MetaLog: Explore comprehensive content on programming, styling, deployment tools, and software knowledge. Stay ahead with our expert articles.",
     url: "https://owais-qazi.vercel.app",
     type: "website",
-    images: [
-      {
-        url: "https://owais-qazi.vercel.app/og-image.jpg", // Replace with your actual image
-        width: 1200,
-        height: 630,
-        alt: "MetaLog Blog Preview",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -38,7 +30,7 @@ export const metadata: Metadata = {
     title: "MetaLog - The Ultimate Blog for IT Enthusiasts",
     description:
       "Explore MetaLog for expert insights on programming, styling, and software deployment.",
-    image: "https://owais-qazi.vercel.app/twitter-card.jpg", // Replace with your actual image
+    
   },
 };
 
